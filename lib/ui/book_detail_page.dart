@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:reading_book_counter/models/book.dart';
 
 class BookDetailPage extends StatelessWidget {
+
+  final Book book;
+
+  BookDetailPage({Key key, @required this.book}) : assert(book != null), super(key: key);
+
   @override
   Widget build(BuildContext context) {
 
     return new Scaffold(
-      appBar: new AppBar(title: new Text("book detail")),
+      appBar: new AppBar(title: new Text("Book detail")),
       body: new ListView(
         children: <Widget>[
           buildImageSection(),
@@ -17,7 +23,7 @@ class BookDetailPage extends StatelessWidget {
   }
 
   Widget buildImageSection() {
-    return new Image.asset('assets/01.jpg', height: 320.0, fit: BoxFit.cover);
+    return new Image.asset(book.assetName, height: 320.0, fit: BoxFit.cover);
   }
 
   Widget buildTitleSection() {
@@ -26,9 +32,9 @@ class BookDetailPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Expanded(child: Text('絵本のタイトル', style: TextStyle(fontWeight: FontWeight.bold),)),
+            Expanded(child: Text(book.title, style: TextStyle(fontWeight: FontWeight.bold),)),
             Icon(Icons.favorite, color: Colors.pinkAccent,),
-            Text('99'),
+            Text(book.count.toString()),
           ],
         )
     );
@@ -37,7 +43,7 @@ class BookDetailPage extends StatelessWidget {
   Widget buildDetailSection() {
     return Container(
       padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 32.0),
-      child: Text('絵本のメモ。あらすじとか、お気に入りのフレーズ、こんなところがおもしろかった、おもしろくなかった、など。Twitterを参考に、140文字程度')
+      child: Text(book.comment)
     );
   }
 }
