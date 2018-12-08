@@ -45,10 +45,10 @@ class _BookGridItem extends StatelessWidget {
     final Widget image = new GestureDetector(
       onTap: (){ showBook(context); },
       child: new Hero(
-        key: new Key(book.assetName),
+        key: new Key(book.asset),
         tag: book.id,
         child: new Image.asset(
-          book.assetName,
+          book.asset,
           fit: BoxFit.cover,
         ),
       ),
@@ -62,7 +62,7 @@ class _BookGridItem extends StatelessWidget {
         onTap: () { onBannerTap(book); },
         child: new GridTileBar(
           backgroundColor: Colors.black45,
-          title: new _GridTitleText(book.count.toString()),
+          title: new _GridTitleText('5'),
           leading: new Icon(
             icon,
             color: Colors.white,
@@ -85,32 +85,32 @@ class BookListState extends State<BookList> {
 
   List<Book> books = <Book>[
     new Book(
-      id: 'book01',
+      id: 1,
+      isbn: 'book01',
       title: 'book 01 title',
-      assetName: 'assets/01.jpg',
-      count: 1,
-      comment: '絵本のメモ。',
+      asset: 'assets/01.jpg',
+      note: '絵本のメモ。',
     ),
     new Book(
-      id: 'book02',
+      id: 2,
+      isbn: 'book02',
       title: 'book 02 title',
-      assetName: 'assets/02.jpg',
-      count: 2,
-      comment: 'あらすじとか、お気に入りのフレーズ',
+      asset: 'assets/02.jpg',
+      note: 'あらすじとか、お気に入りのフレーズ',
     ),
     new Book(
-      id: 'book03',
+      id: 3,
+      isbn: 'book03',
       title: 'book 03 title',
-      assetName: 'assets/03.jpg',
-      count: 3,
-      comment: 'こんなところがおもしろかった',
+      asset: 'assets/03.jpg',
+      note: 'こんなところがおもしろかった',
     ),
     new Book(
-      id: 'book04',
+      id: 4,
+      isbn: 'book04',
       title: 'book 04 title',
-      assetName: 'assets/04.jpg',
-      count: 4,
-      comment: 'おもしろくなかった、など。',
+      asset: 'assets/04.jpg',
+      note: 'おもしろくなかった、など。',
     ),
   ];
 

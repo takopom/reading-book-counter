@@ -23,7 +23,7 @@ class BookDetailPage extends StatelessWidget {
   }
 
   Widget buildImageSection() {
-    return new Image.asset(book.assetName, height: 320.0, fit: BoxFit.cover);
+    return new Image.asset(book.asset, height: 320.0, fit: BoxFit.cover);
   }
 
   Widget buildTitleSection() {
@@ -34,7 +34,7 @@ class BookDetailPage extends StatelessWidget {
           children: <Widget>[
             Expanded(child: Text(book.title, style: TextStyle(fontWeight: FontWeight.bold),)),
             Icon(Icons.favorite, color: Colors.pinkAccent,),
-            Text(book.count.toString()),
+            Text('5'),
           ],
         )
     );
@@ -43,7 +43,7 @@ class BookDetailPage extends StatelessWidget {
   Widget buildDetailSection() {
     return Container(
       padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 32.0),
-      child: Text(book.comment)
+      child: Text(book.note)
     );
   }
 }
