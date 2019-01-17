@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:reading_book_counter/models/book.dart';
 import 'package:reading_book_counter/ui/book_detail_page.dart';
+import 'add_book_page.dart';
 
 typedef void BannerTapCallback(Book book);
+
+class _AddButton extends StatelessWidget {
+
+  _pushBook(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) {
+        return AddBookPage();
+      },
+      fullscreenDialog: true,
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () { _pushBook(context); },
+      backgroundColor: Colors.pink,
+      child: Icon(Icons.add),
+    );
+  }
+}
 
 class _GridTitleText extends StatelessWidget {
   const _GridTitleText(this.text);
@@ -86,28 +108,24 @@ class BookListState extends State<BookList> {
   List<Book> books = <Book>[
     new Book(
       id: 1,
-      isbn: 'book01',
       title: 'book 01 title',
       asset: 'assets/01.jpg',
       note: '絵本のメモ。',
     ),
     new Book(
       id: 2,
-      isbn: 'book02',
       title: 'book 02 title',
       asset: 'assets/02.jpg',
       note: 'あらすじとか、お気に入りのフレーズ',
     ),
     new Book(
       id: 3,
-      isbn: 'book03',
       title: 'book 03 title',
       asset: 'assets/03.jpg',
       note: 'こんなところがおもしろかった',
     ),
     new Book(
       id: 4,
-      isbn: 'book04',
       title: 'book 04 title',
       asset: 'assets/04.jpg',
       note: 'おもしろくなかった、など。',
@@ -130,9 +148,9 @@ class BookListState extends State<BookList> {
               child: new GridView.count(
                 crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
                 mainAxisSpacing: 4.0,
-                  crossAxisSpacing: 4.0,
-                  padding: const EdgeInsets.all(4.0),
-                  childAspectRatio: (orientation == Orientation.portrait) ? 1.0 : 1.3,
+                crossAxisSpacing: 4.0,
+                padding: const EdgeInsets.all(4.0),
+                childAspectRatio: (orientation == Orientation.portrait) ? 1.0 : 1.3,
                 children: books.map((Book book) {
                   return new _BookGridItem(
                     book: book,
@@ -147,6 +165,7 @@ class BookListState extends State<BookList> {
           ),
         ],
       ),
+      floatingActionButton: _AddButton(),
     );
   }
 }

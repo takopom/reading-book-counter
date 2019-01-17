@@ -44,13 +44,13 @@ class BookDatabaseHelper {
     return client.close();
   }
   
-  Future<Book> getBook(String isbn) async {
+  Future<Book> getBook(int id) async {
     var client = await db;
     List<Map> books = await client.query(
         _BookTableName,
-        columns: [Book.db_id, Book.db_isbn, Book.db_title, Book.db_asset, Book.db_url, Book.db_note],
-        where: "${Book.db_isbn} = ?",
-        whereArgs: [isbn]
+        columns: [Book.db_id, Book.db_title, Book.db_asset, Book.db_note],
+        where: "${Book.db_id} = ?",
+        whereArgs: [id]
     );
 
     if (books.length > 0) {
@@ -80,7 +80,7 @@ class BookDatabaseHelper {
     return book;
   }
 
-  Future<int> deleteBook(String id) async {
+  Future<int> deleteBook(int id) async {
     var client = await db;
     return await client.delete(_BookTableName, where: '${Book.db_id} = ?', whereArgs: [id]);
   }
@@ -145,11 +145,9 @@ class BookDatabaseHelper {
   String _createBookTable() {
     return "CREATE TABLE $_BookTableName ("
         "id INTEGER PRIMARY_KEY, "
-        "${Book.db_isbn} TEXT,"
         "${Book.db_title} TEXT,"
         "${Book.db_note} TEXT,"
-        "${Book.db_asset} TEXT,"
-        "${Book.db_url} TEXT"
+        "${Book.db_asset} TEXT"
         ")";
   }
 
@@ -157,8 +155,7 @@ class BookDatabaseHelper {
     return "CREATE TABLE $_NotesTableName ("
         "id INTEGER PRIMARY_KEY, "
         "${Note.db_book_id} INTEGER,"
-        "${Note.db_date} TEXT,"
-        "${Note.db_feeling} TEXT"
+        "${Note.db_date} TEXT"
         ")";
   }
 }
