@@ -13,6 +13,12 @@ dependencies:
   sqflite: any
   path_provider: ^0.4.1
 
+  # Image Picker
+  image_picker: ^0.4.12
+
+  # After Layout
+  after_layout: ^1.0.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

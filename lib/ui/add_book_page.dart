@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:after_layout/after_layout.dart';
 
 class AddBookPage extends StatelessWidget {
 
@@ -18,9 +21,17 @@ class AddBookForm extends StatefulWidget {
   AddBookFormState createState() => AddBookFormState();
 }
 
-class AddBookFormState extends State<AddBookForm> {
+class AddBookFormState extends State<AddBookForm> with AfterLayoutMixin<AddBookForm> {
 
   final _formKey = GlobalKey<FormState>();
+  File _image;
+
+  Future<void> getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +41,7 @@ class AddBookFormState extends State<AddBookForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          _bookIconEdit(),
+          _bookImageView(),
           _titleTextForm(),
           _commentTextForm(),
           _saveButton(context),
@@ -39,18 +50,23 @@ class AddBookFormState extends State<AddBookForm> {
     );
   }
 
-  Widget _bookIconEdit() {
+  @override
+  void afterFirstLayout(BuildContext context) {
+    getImage();
+  }
+
+  Widget _bookImageView() {
     return Stack(
       alignment: Alignment.bottomRight,
       children: <Widget>[
-        _bookIconView(),
+        _bookImage(),
         _pictureEditButton(),
       ],
     );
 
   }
 
-  Widget _bookIconView() {
+  Widget _bookImage() {
     return Container(
       width: 300,
       height: 300,
@@ -58,7 +74,7 @@ class AddBookFormState extends State<AddBookForm> {
         shape: BoxShape.rectangle,
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: ExactAssetImage('assets/01.jpg'),
+          image: _image == null ? AssetImage('assets/01.jpg') : FileImage(_image),
         ),
       ),
     );
